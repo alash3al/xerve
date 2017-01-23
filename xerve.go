@@ -31,7 +31,7 @@ var (
 
 func init() {
 	flag.Usage = func() {
-		fmt.Println("xerve, version " + *VERSION + " COPYRIGHT 2017 xerve")
+		fmt.Println("xerve, version " + VERSION + " COPYRIGHT 2017 xerve")
 		flag.PrintDefaults()
 	}
 	flag.Parse()
@@ -51,15 +51,15 @@ func main() {
 
 	log.Fatal(http.ListenAndServe(
 		*ADDR,
-		func(w http.ResponseWriter, r *http.Request) {
+		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			if *INFO {
-				w.Header().Set("Server", "xerve/"+*VERSION)
-				w.Header().Set("X-Powered-By", "xerve/"+*VERSION)
+				w.Header().Set("Server", "xerve/"+VERSION)
+				w.Header().Set("X-Powered-By", "xerve/"+VERSION)
 			}
 			handlers.CompressHandlerLevel(
 				m.Middleware(http.FileServer(http.Dir(*ROOT))),
 				*GZIP,
 			).ServeHTTP(w, r)
-		},
+		}),
 	))
 }
