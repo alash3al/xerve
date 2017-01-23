@@ -1,5 +1,5 @@
 # xerve
-fast, tiny static file server with auto gzip & minification 
+fast, tiny static file server with auto gzip & minify 
 
 # installation
 `go get github.com/alash3al/xerve`
